@@ -16,6 +16,7 @@ public class ScreenService extends Service {
         super.onCreate();
         mReceiver= new ScreenReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
         registerReceiver(mReceiver, filter);
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -25,6 +26,7 @@ public class ScreenService extends Service {
                 if(mReceiver == null) {
                     mReceiver = new ScreenReceiver();
                     IntentFilter filter  = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+                    filter.addAction(Intent.ACTION_SCREEN_ON);
                     registerReceiver(mReceiver, filter);
                 }
             }
