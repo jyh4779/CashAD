@@ -3,6 +3,7 @@ package com.android.cashad;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,8 +84,19 @@ public class LockScreenActivity extends Activity {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress == 10) {
+                    SharedPreferences settings = getSharedPreferences("CashAD",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
 
-                if(progress == 10) finish();
+                    int dPoint = settings.getInt("CashPoint",-2);
+                    dPoint += 1;
+
+                    Log.d(String.valueOf(this),"dPoint = "+dPoint);
+
+                    editor.putInt("CashPoint", dPoint);
+                    editor.commit();
+                    finish();
+                }
             }
         });
     }

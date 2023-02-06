@@ -3,25 +3,27 @@ package com.android.cashad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
     private Button onBtn, offBtn;
+    private TextView cashText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         checkPermission();
+        PointInit();
 
         onBtn= (Button)findViewById(R.id.button);
         offBtn= (Button)findViewById(R.id.button2);
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 stopService(intent);
             }
         });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences settings = getSharedPreferences("CashAD",MODE_PRIVATE);
+
+        cashText = (TextView) findViewById(R.id.cashViewer);
+        cashText.setText(String.valueOf(settings.getInt("CashPoint",-1)));
     }
     public void checkPermission() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -67,6 +78,20 @@ public class MainActivity extends AppCompatActivity {
                     startForegroundService(intent);
                 }
             }
+        }
+    }
+
+    public void PointInit() {
+        int dPoint = -1;
+        SharedPreferences settings = getSharedPreferences("CashAD",MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        if (dPoint == settings.getInt("CashPoint",-1)){
+            editor.putInt("CashPoint", 0);
+            editor.commit();
+        }
+        else{
+            Log.d(String.valueOf(this),"dPoint = "+dPoint);
         }
     }
 }
