@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
                             // Handle the reward.
                             Log.d(TAG, "The user earned the reward.");
                             int rewardAmount = rewardItem.getAmount();
-                            String rewardType = rewardItem.getType();
+                            //String rewardType = rewardItem.getType();
 
                             SharedPreferences settings = getSharedPreferences("CashAD",MODE_PRIVATE);
                             SharedPreferences.Editor editor = settings.edit();
-                            int adReward = settings.getInt("CashPoint", -5) + 3;
+                            int adReward = settings.getInt("CashPoint", -5) + rewardAmount;
 
                             editor.putInt("CashPoint", adReward);
                             editor.commit();
