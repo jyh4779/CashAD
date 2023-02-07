@@ -26,4 +26,10 @@
         android:text="0"
         android:textSize="20dp"/>
 
+    <Button
+        android:id="@+id/adbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="광고보기" />
+
 </LinearLayout>

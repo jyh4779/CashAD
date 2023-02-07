@@ -70,13 +70,16 @@ public class LockScreenActivity extends Activity {
         adLoader.loadAd(new AdRequest.Builder().build());
 
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
-        seekBar.setMax(10); // 시크바 최대값 설정
+        seekBar.setMax(50); // 시크바 최대값 설정
         seekBar.setProgress(0); // 초기 시크바 값 설정
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 //TODO [SeekBar 컨트롤 진행 중]
+                if(seekBar.getProgress() < 49){
+                    seekBar.setProgress(0);
+                }
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -84,7 +87,7 @@ public class LockScreenActivity extends Activity {
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress == 10) {
+                if(progress > 48) {
                     SharedPreferences settings = getSharedPreferences("CashAD",MODE_PRIVATE);
                     SharedPreferences.Editor editor = settings.edit();
 
